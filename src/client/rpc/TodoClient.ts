@@ -5,14 +5,13 @@ import { AtomRpc } from "@effect-atom/atom-react"
 import { TodoRpcs } from "@shared/rpc/TodoRpcs.js"
 import * as Layer from "effect/Layer"
 
+const RpcProtocolLive = RpcClient.layerProtocolSocket({
+	retryTransientErrors: true,
+}).pipe(Layer.provide([BrowserSocket.layerWebSocket("ws://localhost:3000/rpc"), RpcSerialization.layerJson]))
+
 class TodoClient extends AtomRpc.Tag<TodoClient>()("TodoClient", {
 	group: TodoRpcs,
-	protocol: RpcClient.layerProtocolSocket({
-		retryTransientErrors: true,
-	}).pipe(
-		Layer.provide(BrowserSocket.layerWebSocket("ws://localhost:3000/rpc")),
-		Layer.provide(RpcSerialization.layerJson),
-	),
+	protocol: RpcProtocolLive,
 }) {}
 
 export { TodoClient }

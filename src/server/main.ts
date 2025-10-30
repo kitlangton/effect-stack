@@ -1,10 +1,9 @@
 import { HttpRouter } from "@effect/platform"
-import { BunContext, BunHttpServer, BunRuntime } from "@effect/platform-bun"
+import { BunHttpServer, BunRuntime } from "@effect/platform-bun"
 import { RpcSerialization, RpcServer } from "@effect/rpc"
 import { TodoRpcs } from "@shared/rpc/TodoRpcs.js"
 import type { TodoId } from "@shared/types/TodoId.js"
 import { Effect, Layer } from "effect"
-import { DbLayer } from "./db/client.js"
 import { TodoService } from "./services/todo-service/TodoService.js"
 
 // Create Todo handlers layer
@@ -18,20 +17,14 @@ const TodoHandlersLive = TodoRpcs.toLayer(
 			deleteTodo: (payload: TodoId) => service.deleteTodo(payload),
 		})
 	}),
-)
+).pipe(Layer.provide([TodoService.Default]))
+
+const RpcProtocol = RpcServer.layerProtocolWebsocket({ path: "/rpc" }).pipe(Layer.provide(RpcSerialization.layerJson))
 
 // Create RPC server layer
-const RpcLive = RpcServer.layer(TodoRpcs).pipe(Layer.provide(TodoHandlersLive))
+const RpcLive = RpcServer.layer(TodoRpcs).pipe(Layer.provide([TodoHandlersLive, RpcProtocol]))
 
 // Create HTTP server with WebSocket protocol
-const HttpServerLive = HttpRouter.Default.serve().pipe(
-	Layer.provide(RpcLive),
-	Layer.provideMerge(RpcServer.layerProtocolWebsocket({ path: "/rpc" })),
-	Layer.provide(BunHttpServer.layer({ port: 3000 })),
-	Layer.provide(RpcSerialization.layerJson),
-	Layer.provide(TodoService.Default),
-	Layer.provide(DbLayer),
-	Layer.provide(BunContext.layer),
-)
+const HttpServerLive = HttpRouter.Default.serve().pipe(Layer.provide([RpcLive, BunHttpServer.layer({ port: 3000 })]))
 
 BunRuntime.runMain(Layer.launch(HttpServerLive))
