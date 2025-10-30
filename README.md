@@ -23,6 +23,9 @@ bun dev
 
 # Run tests
 bun test
+
+# Type check
+bun typecheck
 ```
 
 ## Project Structure

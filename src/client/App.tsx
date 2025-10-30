@@ -21,14 +21,14 @@ function App() {
     })
   }
 
-  const handleToggleTodo = (id: string) => {
+  const handleToggleTodo = (id: number) => {
     toggleTodo({
       payload: id,
       reactivityKeys: ["todos"],
     })
   }
 
-  const handleDeleteTodo = (id: string) => {
+  const handleDeleteTodo = (id: number) => {
     deleteTodo({
       payload: id,
       reactivityKeys: ["todos"],

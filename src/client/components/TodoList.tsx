@@ -4,8 +4,8 @@ import { TodoItem } from "./TodoItem.js"
 
 interface TodoListProps {
   todos: Result.Result<readonly Todo[]>
-  onToggle: (id: string) => void
-  onDelete: (id: string) => void
+  onToggle: (id: number) => void
+  onDelete: (id: number) => void
 }
 
 export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
