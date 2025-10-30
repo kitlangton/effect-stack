@@ -1,7 +1,8 @@
 import * as BunFileSystem from "@effect/platform-bun/BunFileSystem"
 import { SqlClient } from "@effect/sql"
 import type { SqlError } from "@effect/sql/SqlError"
-import { MigrationsLayer } from "@server/db/migrations.js"
+import { DbLayer } from "@server/db/client.js"
+import { MigrationsLayer, MigrationsLive } from "@server/db/migrations.js"
 import { Todo, TodoFromDb } from "@shared/types/Todo.js"
 import type { TodoId } from "@shared/types/TodoId.js"
 import { TodoNotFoundError, TodoValidationError, UnknownTodoServiceError } from "@shared/types/TodoServiceError.js"
@@ -55,6 +56,7 @@ const decodeTodoRows = (rows: unknown): Effect.Effect<readonly Todo[], TodoValid
  */
 export class TodoService extends Effect.Service<TodoService>()("TodoService", {
 	accessors: true,
+	dependencies: [DbLayer, MigrationsLive],
 	scoped: Effect.gen(function* () {
 		const sql = yield* SqlClient.SqlClient
 
@@ -128,7 +130,6 @@ export class TodoService extends Effect.Service<TodoService>()("TodoService", {
 				}),
 		} as const
 	}),
-	dependencies: [MigrationsLayer, BunFileSystem.layer],
 }) {
 	/**
 	 * Test layer that provides an in-memory implementation for testing.

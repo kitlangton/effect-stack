@@ -1,6 +1,9 @@
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { SqliteMigrator } from "@effect/sql-sqlite-bun"
+import { Layer } from "effect"
+import { DbLayer } from "./client.js"
+import { PlatformLive } from "@server/plaform.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -15,3 +18,7 @@ export const MigrationsLayer = SqliteMigrator.layer({
 	loader: SqliteMigrator.fromFileSystem(join(__dirname, "migrations")),
 	table: "effect_sql_migrations",
 })
+
+export const MigrationsLive = MigrationsLayer.pipe(
+	Layer.provide([DbLayer, PlatformLive])
+)
