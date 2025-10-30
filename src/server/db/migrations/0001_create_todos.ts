@@ -11,10 +11,10 @@ import * as Effect from "effect/Effect"
  * - created_at: Timestamp (auto-set on insert)
  */
 export default Effect.gen(function* () {
-  const sql = yield* SqlClient.SqlClient
+	const sql = yield* SqlClient.SqlClient
 
-  // Create todos table
-  yield* sql`
+	// Create todos table
+	yield* sql`
     CREATE TABLE IF NOT EXISTS todos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
@@ -23,14 +23,14 @@ export default Effect.gen(function* () {
     )
   `
 
-  // Index for filtering by completion status
-  yield* sql`
+	// Index for filtering by completion status
+	yield* sql`
     CREATE INDEX IF NOT EXISTS idx_todos_completed
     ON todos(completed)
   `
 
-  // Index for ordering by creation date
-  yield* sql`
+	// Index for ordering by creation date
+	yield* sql`
     CREATE INDEX IF NOT EXISTS idx_todos_created_at
     ON todos(created_at DESC)
   `

@@ -1,15 +1,12 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["./src/shared/*"],
-      "@client/*": ["./src/client/*"],
-      "@server/*": ["./src/server/*"]
-    }
-  }
+	"files": [],
+	"references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@shared/*": ["./src/shared/*"],
+			"@client/*": ["./src/client/*"],
+			"@server/*": ["./src/server/*"]
+		}
+	}
 }

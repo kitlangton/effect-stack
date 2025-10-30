@@ -1,44 +1,59 @@
 import { Result } from "@effect-atom/atom-react"
+import { AnimatePresence, motion } from "motion/react"
 import type { Todo } from "@shared/types/Todo.js"
+import type { TodoId } from "@shared/types/TodoId.js"
+import type { TodoServiceError } from "@shared/types/TodoServiceError.js"
 import { TodoItem } from "./TodoItem.js"
 
 interface TodoListProps {
-  todos: Result.Result<readonly Todo[]>
-  onToggle: (id: number) => void
-  onDelete: (id: number) => void
+	todos: Result.Result<readonly Todo[], TodoServiceError>
+	onToggle: (id: TodoId) => void
+	onDelete: (id: TodoId) => void
 }
 
 export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
-  return (
-    <div className="space-y-1">
-      {Result.match(todos, {
-        onInitial: () => (
-          <div className="text-neutral-500 text-center py-8">Loading...</div>
-        ),
-        onFailure: (error) => (
-          <div className="text-neutral-400 text-center py-8">
-            Error: {String(error.cause)}
-          </div>
-        ),
-        onSuccess: (success) => (
-          <>
-            {success.value.length === 0 ? (
-              <div className="text-neutral-500 text-center py-8">
-                No todos yet. Add one above!
-              </div>
-            ) : (
-              success.value.map((todo) => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onToggle={onToggle}
-                  onDelete={onDelete}
-                />
-              ))
-            )}
-          </>
-        ),
-      })}
-    </div>
-  )
+	return (
+		<div>
+			{Result.match(todos, {
+				onInitial: () => (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className="text-neutral-500 text-center py-8"
+					>
+						Loading...
+					</motion.div>
+				),
+				onFailure: (error) => (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className="text-red-400 text-center py-8"
+					>
+						Error: {String(error.cause)}
+					</motion.div>
+				),
+				onSuccess: (success) => (
+					<>
+						{success.value.length === 0 ? (
+							<motion.div
+								initial={{ opacity: 0, filter: "blur(4px)" }}
+								animate={{ opacity: 1, filter: "blur(0px)" }}
+								transition={{ type: "spring", visualDuration: 0.3, bounce: 0 }}
+								className="text-neutral-500 text-center py-8"
+							>
+								No todos yet. Add one above!
+							</motion.div>
+						) : (
+							<AnimatePresence mode="popLayout">
+								{success.value.map((todo) => (
+									<TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
+								))}
+							</AnimatePresence>
+						)}
+					</>
+				),
+			})}
+		</div>
+	)
 }

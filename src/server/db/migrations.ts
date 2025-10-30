@@ -1,6 +1,6 @@
-import { SqliteMigrator } from "@effect/sql-sqlite-bun"
-import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
+import { SqliteMigrator } from "@effect/sql-sqlite-bun"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -12,6 +12,6 @@ const __dirname = dirname(__filename)
  * They run automatically on application startup in order.
  */
 export const MigrationsLayer = SqliteMigrator.layer({
-  loader: SqliteMigrator.fromFileSystem(join(__dirname, "migrations")),
-  table: "effect_sql_migrations",
+	loader: SqliteMigrator.fromFileSystem(join(__dirname, "migrations")),
+	table: "effect_sql_migrations",
 })
