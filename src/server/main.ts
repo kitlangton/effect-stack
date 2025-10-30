@@ -19,18 +19,12 @@ const TodoHandlersLive = TodoRpcs.toLayer(
 	}),
 ).pipe(Layer.provide([TodoService.Default]))
 
-const RpcProtocol = RpcServer.layerProtocolWebsocket({ path: "/rpc" }).pipe(
-	Layer.provide(RpcSerialization.layerJson)
-)
+const RpcProtocol = RpcServer.layerProtocolWebsocket({ path: "/rpc" }).pipe(Layer.provide(RpcSerialization.layerJson))
 
 // Create RPC server layer
-const RpcLive = RpcServer.layer(TodoRpcs).pipe(
-	Layer.provide([TodoHandlersLive, RpcProtocol])
-)
+const RpcLive = RpcServer.layer(TodoRpcs).pipe(Layer.provide([TodoHandlersLive, RpcProtocol]))
 
 // Create HTTP server with WebSocket protocol
-const HttpServerLive = HttpRouter.Default.serve().pipe(
-	Layer.provide([RpcLive, BunHttpServer.layer({ port: 3000 })]),
-)
+const HttpServerLive = HttpRouter.Default.serve().pipe(Layer.provide([RpcLive, BunHttpServer.layer({ port: 3000 })]))
 
 BunRuntime.runMain(Layer.launch(HttpServerLive))

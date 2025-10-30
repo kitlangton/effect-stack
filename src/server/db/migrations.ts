@@ -19,6 +19,4 @@ export const MigrationsLayer = SqliteMigrator.layer({
 	table: "effect_sql_migrations",
 })
 
-export const MigrationsLive = MigrationsLayer.pipe(
-	Layer.provide([DbLayer, PlatformLive])
-)
+export const MigrationsLive = MigrationsLayer.pipe(Layer.provide([DbLayer, PlatformLive]))
