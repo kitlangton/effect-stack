@@ -28,6 +28,7 @@
 		"@number-flow/react": "^0.5.10",
 		"@phosphor-icons/react": "^2.1.10",
 		"@tailwindcss/vite": "^4.1.16",
+		"concurrently": "^9.2.1",
 		"effect": "^3.18.4",
 		"motion": "^12.23.24",
 		"react": "^19.1.1",
