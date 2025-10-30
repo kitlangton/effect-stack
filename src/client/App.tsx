@@ -1,7 +1,7 @@
 import { Atom, Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react"
 import type { TodoId } from "@shared/types/TodoId.js"
 import { AddTodoForm } from "./components/AddTodoForm.js"
-import { TodoFilter, filterAtom } from "./components/TodoFilter.js"
+import { filterAtom, TodoFilter } from "./components/TodoFilter.js"
 import { TodoList } from "./components/TodoList.js"
 import { TodoStats } from "./components/TodoStats.js"
 import { TodoClient } from "./rpc/TodoClient.js"

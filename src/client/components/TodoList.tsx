@@ -1,8 +1,8 @@
 import { Result } from "@effect-atom/atom-react"
-import { AnimatePresence, motion } from "motion/react"
 import type { Todo } from "@shared/types/Todo.js"
 import type { TodoId } from "@shared/types/TodoId.js"
 import type { TodoServiceError } from "@shared/types/TodoServiceError.js"
+import { AnimatePresence, motion } from "motion/react"
 import { TodoItem } from "./TodoItem.js"
 
 interface TodoListProps {
@@ -16,20 +16,12 @@ export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
 		<div>
 			{Result.match(todos, {
 				onInitial: () => (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						className="text-neutral-500 text-center py-8"
-					>
+					<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-neutral-500 text-center py-8">
 						Loading...
 					</motion.div>
 				),
 				onFailure: (error) => (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						className="text-red-400 text-center py-8"
-					>
+					<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-center py-8">
 						Error: {String(error.cause)}
 					</motion.div>
 				),

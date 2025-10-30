@@ -1,6 +1,6 @@
 import { Atom, useAtomSet, useAtomValue } from "@effect-atom/atom-react"
 import { motion } from "motion/react"
-import { useRef, useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export type TodoFilter = "all" | "completed" | "active"
 

@@ -5,11 +5,7 @@ import { MigrationsLayer } from "@server/db/migrations.js"
 import { Todo, TodoFromDb } from "@shared/types/Todo.js"
 import type { TodoId } from "@shared/types/TodoId.js"
 import { TodoNotFoundError, TodoValidationError, UnknownTodoServiceError } from "@shared/types/TodoServiceError.js"
-import * as DateTime from "effect/DateTime"
-import * as Effect from "effect/Effect"
-import * as Layer from "effect/Layer"
-import * as Option from "effect/Option"
-import * as Schema from "effect/Schema"
+import { DateTime, Effect, Layer, Option, Schema } from "effect"
 
 /**
  * Helper to handle SQL errors and convert them to UnknownTodoServiceError.

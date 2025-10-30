@@ -1,5 +1,6 @@
 import { SqliteClient } from "@effect/sql-sqlite-bun"
 import { Config, Effect, Layer } from "effect"
+// biome-ignore lint/suspicious/noShadowRestrictedNames: Effect String module
 import * as String from "effect/String"
 
 /**

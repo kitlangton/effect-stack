@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from "motion/react"
 import type { Todo } from "@shared/types/Todo.js"
 import type { TodoId } from "@shared/types/TodoId.js"
+import { AnimatePresence, motion } from "motion/react"
 
 interface TodoItemProps {
 	todo: Todo

@@ -32,20 +32,32 @@ bun typecheck
 
 ```
 src/
-├── client/          # React frontend
-│   ├── components/  # UI components
-│   └── rpc/         # RPC client setup
-├── server/          # Bun backend
-│   └── TodoService.ts
-└── shared/          # Shared types and RPC definitions
-    ├── rpc/
-    └── types/
+├── client/              # React frontend
+│   ├── components/      # UI components (TodoList, TodoItem, etc.)
+│   ├── rpc/             # RPC client setup (TodoClient)
+│   ├── App.tsx          # Main app component
+│   └── main.tsx         # React entry point
+├── server/              # Bun backend
+│   ├── db/              # Database layer
+│   │   ├── client.ts    # SQLite client configuration
+│   │   ├── migrations.ts
+│   │   └── migrations/  # SQL migration files
+│   ├── services/        # Business logic services
+│   │   └── todo-service/
+│   │       ├── TodoService.ts      # Service implementation
+│   │       └── TodoService.test.ts # Service tests
+│   └── main.ts          # Server entry point with RPC setup
+└── shared/              # Shared types and RPC definitions
+    ├── rpc/             # RPC contracts (TodoRpcs)
+    └── types/           # Domain types (Todo, TodoId, errors)
 ```
 
 ## Tech Stack
 
 - [Effect](https://effect.website/) - Typed functional effects for TypeScript
-- [Bun](https://bun.sh/) - Fast all-in-one JavaScript runtime
+- [Effect Atom](https://github.com/tim-smart/effect-atom) - Reactive state management for Effect
+- [Bun](https://bun.sh/) - Bun!
 - [React](https://react.dev/) - UI library
+- [Motion](https://motion.dev/) - Animation library for React
 - [Vite](https://vite.dev/) - Build tool
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+- [Tailwind CSS](https://tailwindcss.com/) - It's Tailwind
